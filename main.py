@@ -12,6 +12,20 @@ class WebcamReader:
     def __init__(self):
         self.video_capture = self.get_video_capture()
 
+    def get_camera_indexes(self):
+        # checks the first 10 indexes.
+        index = 0
+        arr = []
+        i = 10
+        while i > 0:
+            cap = cv2.VideoCapture(index)
+            if cap.read()[0]:
+                arr.append(index)
+                cap.release()
+            index += 1
+            i -= 1
+        return arr
+
     def start(self):
 
         while True:
@@ -24,7 +38,10 @@ class WebcamReader:
         cv2.destroyAllWindows()
 
     def get_video_capture(self) -> cv2.VideoCapture:
-        video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+        video_indexes = self.get_camera_indexes()
+
+        video_capture = cv2.VideoCapture(video_indexes[0], cv2.CAP_DSHOW)
         if not video_capture.isOpened():
             raise IOError("Cannot open webcam")
 
