@@ -41,7 +41,7 @@ class WebcamReader:
 
         video_indexes = self.get_camera_indexes()
 
-        video_capture = cv2.VideoCapture(video_indexes[0], cv2.CAP_DSHOW)
+        video_capture = cv2.VideoCapture(video_indexes[0])
         if not video_capture.isOpened():
             raise IOError("Cannot open webcam")
 
